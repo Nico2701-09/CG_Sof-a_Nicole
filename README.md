@@ -2,6 +2,6 @@
 ## Ejercicio 1 slash:
 ### Video: 
 [Link al video](Video/Grabación-de-pantalla-2026-02-22-234702.gif)
-
+![Slash](https://media3.giphy.com/media/aUovxH8Vf9qDu/giphy.gif)
 
 
