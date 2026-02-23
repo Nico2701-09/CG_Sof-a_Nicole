@@ -1,3 +1,4 @@
 # CG_Sof-a_Nicole
 ## Link Video 
-Video/Grabación de pantalla 2026-02-22 234702.mp4
+https://github.com/Nico2701-09/CG_Sof-a_Nicole/blob/main/Video/Grabaci%C3%B3n%20de%20pantalla%202026-02-22%20234702.mp4
+
