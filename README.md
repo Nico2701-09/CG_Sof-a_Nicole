@@ -1,4 +1,7 @@
-# CG_Sof-a_Nicole
-## Link Video 
-https://github.com/Nico2701-09/CG_Sof-a_Nicole/blob/main/Video/Grabaci%C3%B3n%20de%20pantalla%202026-02-22%20234702.mp4
+# Computacion Gráfica - Sofía Caraballo Nicole Livingston
+## Ejercicio 1 slash:
+### Video: 
+[Link al video](Video/Grabación-de-pantalla-2026-02-22-234702.gif)
+
+
 
