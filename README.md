@@ -14,6 +14,8 @@
 ### ConceptArt
 ![Moodboard y Concept Computación (2)](https://github.com/user-attachments/assets/7e1f47e1-bcce-45fa-8497-dc88b14a9440)
 
+https://www.canva.com/design/DAHFHHMDM8k/EhZtn2JLAQtYE3DInaDAWA/edit?utm_content=DAHFHHMDM8k&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 ### Video
 ![Grabación-de-pantalla-2026-03-27-035908](https://github.com/user-attachments/assets/c5c21601-7dc9-469b-99d5-f85cd37556da)
 
