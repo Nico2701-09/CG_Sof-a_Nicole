@@ -41,6 +41,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_024f4c067eca4eb8a43494e86bee98b6_Out_0_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_f399ded23e4e41c48180e8065fa700b7_Out_0_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _environmentMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -59,15 +67,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Amplitude: 0.06
+    - _Amplitude: 0.03
     - _Gravity: 9.81
     - _Normal1Strenght: 0.01
     - _Normal2Strenght: 0.01
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Speed: 1
+    - _Speed: 0.56
     - _Steepness: 0.5
-    - _WaveLength: 2.8
+    - _WaveLength: 1.27
     m_Colors:
     - _DeepColor: {r: 0.2356781, g: 0.25961152, b: 0.2981131, a: 1}
     - _DeepColor2: {r: 0.25792098, g: 0.41271186, b: 0.6603774, a: 1}
