@@ -19,6 +19,7 @@ public class DirectorControllerScript : MonoBehaviour
     private int currentIndex;
     private bool isFinished;
     private bool isPaused;
+    private bool isSwitching;
 
     private void OnEnable()
     {
@@ -43,6 +44,7 @@ public class DirectorControllerScript : MonoBehaviour
             {
                 if (directors[i] != null)
                 {
+                    directors[i].played += OnDirectorPlayed;
                     directors[i].stopped += OnDirectorStopped;
                 }
             }
@@ -74,6 +76,7 @@ public class DirectorControllerScript : MonoBehaviour
             {
                 if (directors[i] != null)
                 {
+                    directors[i].played -= OnDirectorPlayed;
                     directors[i].stopped -= OnDirectorStopped;
                 }
             }
@@ -151,28 +154,53 @@ public class DirectorControllerScript : MonoBehaviour
 
     private void SelectDirector(int index, bool reset)
     {
-        currentIndex = Mathf.Clamp(index, 0, directors != null ? directors.Length - 1 : 0);
+        if (directors == null || directors.Length == 0)
+        {
+            return;
+        }
+
+        PlayableDirector previousDirector = GetCurrentDirector();
+        currentIndex = Mathf.Clamp(index, 0, directors.Length - 1);
         isFinished = false;
         isPaused = false;
+
+        isSwitching = true;
 
         if (directors != null)
         {
             for (int i = 0; i < directors.Length; i++)
             {
-                if (directors[i] != null)
+                if (directors[i] == null)
                 {
-                    directors[i].Stop();
-                    if (reset)
-                    {
-                        directors[i].time = 0d;
-                        directors[i].Evaluate();
-                    }
+                    continue;
                 }
+
+                directors[i].Stop();
             }
         }
 
+        if (previousDirector != null && previousDirector != GetCurrentDirector() && reset)
+        {
+            previousDirector.time = 0d;
+            previousDirector.Evaluate();
+        }
+
+        PlayableDirector currentDirector = GetCurrentDirector();
+        if (currentDirector != null)
+        {
+            if (reset)
+            {
+                currentDirector.time = 0d;
+                currentDirector.Evaluate();
+            }
+
+            currentDirector.enabled = true;
+        }
+
+        isSwitching = false;
+        SetOtherDirectorsEnabled(currentDirector, false);
         UpdateEffectLabel();
-        UpdatePlayButtonLabel(GetCurrentDirector());
+        UpdatePlayButtonLabel(currentDirector);
     }
 
     private void RestartDirector(PlayableDirector director)
@@ -184,11 +212,28 @@ public class DirectorControllerScript : MonoBehaviour
 
         isFinished = false;
         isPaused = false;
+        isSwitching = true;
+        SetOtherDirectorsEnabled(director, false);
         director.Stop();
         director.time = 0d;
         director.Evaluate();
+        isSwitching = false;
         ResumeDirector(director);
         UpdatePlayButtonLabel(director);
+    }
+
+    private void OnDirectorPlayed(PlayableDirector director)
+    {
+        if (director == null)
+        {
+            return;
+        }
+
+        SetOtherDirectorsEnabled(director, false);
+        if (!director.enabled)
+        {
+            director.enabled = true;
+        }
     }
 
     private void OnDirectorStopped(PlayableDirector director)
@@ -198,12 +243,15 @@ public class DirectorControllerScript : MonoBehaviour
             return;
         }
 
-        if (director.duration > 0d && director.time >= director.duration - 0.01d)
+        if (isSwitching)
         {
-            isFinished = true;
-            isPaused = false;
-            UpdatePlayButtonLabel(director);
+            return;
         }
+
+        SetOtherDirectorsEnabled(director, false);
+        isFinished = true;
+        isPaused = false;
+        UpdatePlayButtonLabel(director);
     }
 
     private void UpdateEffectLabel()
@@ -259,6 +307,7 @@ public class DirectorControllerScript : MonoBehaviour
         }
 
         isPaused = true;
+        SetOtherDirectorsEnabled(director, false);
         PlayableGraph graph = director.playableGraph;
         if (graph.IsValid())
         {
@@ -274,6 +323,7 @@ public class DirectorControllerScript : MonoBehaviour
         }
 
         isPaused = false;
+        SetOtherDirectorsEnabled(director, false);
         PlayableGraph graph = director.playableGraph;
         if (graph.IsValid())
         {
@@ -281,6 +331,43 @@ public class DirectorControllerScript : MonoBehaviour
         }
 
         director.Play();
+    }
+
+    private void SetOtherDirectorsEnabled(PlayableDirector activeDirector, bool enabled)
+    {
+        if (directors == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < directors.Length; i++)
+        {
+            PlayableDirector director = directors[i];
+            if (director == null || director == activeDirector)
+            {
+                continue;
+            }
+
+            director.enabled = enabled;
+        }
+    }
+
+    private void SetAllDirectorsEnabled(bool enabled)
+    {
+        if (directors == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < directors.Length; i++)
+        {
+            if (directors[i] == null)
+            {
+                continue;
+            }
+
+            directors[i].enabled = enabled;
+        }
     }
 
     private PlayableDirector GetCurrentDirector()
